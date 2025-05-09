@@ -19,7 +19,7 @@ def aumenta_contraste(img):
     return img_contraste
 
 def blur(img):
-    img_blur = cv2.GaussianBlur(img, (7, 7), 0)
+    img_blur = cv2.GaussianBlur(img, (21, 21), 0)
     return img_blur
 
 def nitidez(img):

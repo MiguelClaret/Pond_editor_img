@@ -4,9 +4,6 @@ from funcoes import *
 import numpy as np
 import cv2
 
-
-
-
 def editor_img(image, new_largura, new_altura, filtros_selecionados, redimensionar_img):
     image = np.array(image)
     img_redimensionada = image
@@ -36,6 +33,8 @@ def editor_img(image, new_largura, new_altura, filtros_selecionados, redimension
 
     with col2:
         st.image(img_redimensionada, caption="Imagem Editada")
+    
+    return img_redimensionada
 
 
 

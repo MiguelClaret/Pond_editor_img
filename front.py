@@ -1,6 +1,8 @@
 import streamlit as st
 from PIL import Image
 from editor import  editor_img
+import io
+import cv2
 
 st.markdown("# Editor de Imagens do Claret")
 
@@ -14,8 +16,6 @@ new_largura = 0
 new_altura = 0 
 
 if redimensionar_img:
-    # Dois inputs de números
-    # Inputs de texto para aceitar vírgula
     largura = st.text_input("Digite a largura em px", value="0")
     altura = st.text_input("Digite a altura em px", value="0")
     try:
@@ -40,17 +40,24 @@ for i, filtro in enumerate(opcoes_filtros):
         if st.checkbox(filtro, key=f"check_{filtro}"):
             filtros_selecionados.append(filtro)
 
-# Mostrar selecionados
 st.markdown("---")
 st.success(f"Filtros Selecionados: {', '.join(filtros_selecionados) if filtros_selecionados else 'Nenhum'}")
 
 
 if uploaded_file:
     image = Image.open(uploaded_file)
-    editor_img(image, new_largura, new_altura, filtros_selecionados, redimensionar_img)
-    
+    img_nova = editor_img(image, new_largura, new_altura, filtros_selecionados, redimensionar_img)
+
+    img_download = cv2.cvtColor(img_nova, cv2.COLOR_BGR2RGB)
+    pil_img = Image.fromarray(img_download)
+    buf = io.BytesIO()
+    pil_img.save(buf, format="PNG")
+
+    st.download_button(
+        label="📥 Baixar imagem editada",
+        data=buf.getvalue(),
+        file_name="imagem_editada.png",
+        mime="image/png"
+    )
 else:
     st.markdown("Nenhuma Imagem selecionada")
-
-
-
