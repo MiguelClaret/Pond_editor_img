@@ -1,6 +1,6 @@
 import streamlit as st
 from PIL import Image
-from .editor import  editor_img
+from editor import  editor_img
 import io
 import cv2
 
